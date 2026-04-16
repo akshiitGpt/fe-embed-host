@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Host App - Embedding Demo</title>
+  <title>Dashboard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -11,290 +11,566 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f0f2f5;
       color: #1a1a2e;
+      display: flex;
+      min-height: 100vh;
     }
 
-    nav {
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 240px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sidebar .brand {
+      padding: 0 20px 24px;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      border-bottom: 1px solid #313244;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar .brand .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #a6e3a1;
+    }
+
+    .sidebar nav { flex: 1; }
+
+    .sidebar .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      font-size: 14px;
+      color: #a6adc8;
+      cursor: pointer;
+      transition: all 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: #cdd6f4;
+    }
+
+    .sidebar .nav-item.active {
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border-left-color: #4f46e5;
+    }
+
+    .sidebar .nav-item .icon {
+      width: 20px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .sidebar .nav-item .badge {
+      margin-left: auto;
+      background: #4f46e5;
+      color: white;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .sidebar .section-label {
+      padding: 16px 20px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #585b70;
+    }
+
+    .sidebar .user-info {
+      padding: 16px 20px;
+      border-top: 1px solid #313244;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: white;
+      font-weight: 600;
+    }
+
+    .sidebar .user-details { font-size: 12px; }
+    .sidebar .user-details .name { color: white; font-weight: 500; }
+    .sidebar .user-details .role { color: #585b70; }
+
+    /* ── Main content ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .topbar {
       background: white;
-      padding: 16px 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      padding: 16px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      flex-shrink: 0;
     }
 
-    nav .logo {
+    .topbar h1 {
       font-size: 20px;
       font-weight: 700;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
     }
 
-    nav .nav-links { display: flex; gap: 24px; }
-    nav .nav-links a {
-      text-decoration: none;
-      color: #555;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    nav .nav-links a:hover { color: #667eea; }
-
-    .hero {
-      max-width: 900px;
-      margin: 60px auto 40px;
-      text-align: center;
-      padding: 0 20px;
+    .topbar .actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .hero h1 {
-      font-size: 42px;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 16px;
+    .topbar .search-box {
+      padding: 8px 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 13px;
+      width: 220px;
+      outline: none;
     }
 
-    .hero p {
-      font-size: 18px;
-      color: #666;
-      max-width: 600px;
-      margin: 0 auto 32px;
-      line-height: 1.6;
+    .topbar .search-box:focus { border-color: #4f46e5; }
+
+    .topbar .notif {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      position: relative;
     }
 
-    .badge {
-      display: inline-block;
-      background: #e8f5e9;
-      color: #2e7d32;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 16px;
+    .topbar .notif .ping {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      border: 2px solid white;
     }
 
-    .demo-section {
-      max-width: 900px;
-      margin: 0 auto 40px;
-      padding: 0 20px;
-    }
-
-    .demo-section h2 {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    .demo-section p.subtitle {
-      color: #666;
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-
-    .demo-card {
+    /* ── Tab bar ── */
+    .tab-bar {
       background: white;
-      border-radius: 16px;
-      padding: 32px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      margin-bottom: 24px;
+      padding: 0 32px;
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid #e5e7eb;
+      flex-shrink: 0;
     }
 
-    .demo-card h3 {
-      font-size: 18px;
-      margin-bottom: 12px;
+    .tab {
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #888;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .demo-card h3 .num {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
+    .tab:hover { color: #555; }
+
+    .tab.active {
+      color: #4f46e5;
+      border-bottom-color: #4f46e5;
     }
 
-    .iframe-demo {
-      border: 2px dashed #ddd;
-      border-radius: 12px;
-      padding: 24px;
-      display: flex;
-      justify-content: center;
-      background: #fafafa;
-      margin-top: 16px;
+    .tab .tab-icon { font-size: 15px; }
+
+    .tab .embed-tag {
+      font-size: 9px;
+      background: #ede9fe;
+      color: #7c3aed;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
     }
 
-    .iframe-demo iframe {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-
-    .code-block {
-      background: #1e1e2e;
-      color: #cdd6f4;
-      padding: 20px;
-      border-radius: 10px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 13px;
-      line-height: 1.6;
-      overflow-x: auto;
-      margin-top: 16px;
+    /* ── Tab panels ── */
+    .tab-content {
+      flex: 1;
+      overflow: hidden;
       position: relative;
     }
 
-    .code-block .keyword { color: #cba6f7; }
-    .code-block .string { color: #a6e3a1; }
-    .code-block .tag { color: #89b4fa; }
-    .code-block .attr { color: #f9e2af; }
-
-    .copy-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(255,255,255,0.1);
-      border: none;
-      color: #cdd6f4;
-      padding: 4px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-    .copy-btn:hover { background: rgba(255,255,255,0.2); }
-
-    .event-log {
-      margin-top: 16px;
-      background: #1e1e2e;
-      color: #a6e3a1;
-      padding: 16px;
-      border-radius: 10px;
-      font-family: 'SF Mono', monospace;
-      font-size: 12px;
-      max-height: 150px;
+    .tab-panel {
+      display: none;
+      width: 100%;
+      height: 100%;
       overflow-y: auto;
     }
 
-    .event-log .log-entry { margin-bottom: 4px; }
-    .event-log .timestamp { color: #6c7086; }
+    .tab-panel.active { display: block; }
 
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #999;
-      font-size: 13px;
+    .tab-panel iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
+
+    /* ── Native tab content ── */
+    .native-content {
+      padding: 32px;
+    }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .welcome-banner h2 { font-size: 24px; margin-bottom: 8px; }
+    .welcome-banner p { opacity: 0.85; font-size: 14px; line-height: 1.6; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .card .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 { font-size: 15px; margin-bottom: 6px; }
+    .card p { font-size: 13px; color: #888; line-height: 1.5; }
+
+    /* Settings tab */
+    .settings-content {
+      padding: 32px;
+      max-width: 600px;
+    }
+
+    .settings-content h2 { font-size: 20px; margin-bottom: 20px; }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .setting-row .setting-info h4 { font-size: 14px; margin-bottom: 2px; }
+    .setting-row .setting-info p { font-size: 12px; color: #888; }
+
+    .toggle {
+      width: 44px;
+      height: 24px;
+      border-radius: 12px;
+      background: #ddd;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle.on { background: #4f46e5; }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: white;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .toggle.on::after { transform: translateX(20px); }
+
+    /* ── Status bar ── */
+    .status-bar {
+      background: white;
+      padding: 8px 32px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #999;
+      flex-shrink: 0;
+    }
+
+    .status-bar .status-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #a6e3a1;
+      margin-right: 6px;
+    }
+
+    .status-bar .embed-status { color: #7c3aed; font-weight: 500; }
   </style>
 </head>
 <body>
 
-  <nav>
-    <div class="logo">HostApp</div>
-    <div class="nav-links">
-      <a href="#iframe-embed">iFrame Embed</a>
-      <a href="#script-embed">Script Embed</a>
-      <a href="#events">Events</a>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="brand">
+      <div class="dot"></div>
+      Acme Dashboard
     </div>
-  </nav>
 
-  <div class="hero">
-    <div class="badge">POC - Embeddable Frontend</div>
-    <h1>Embedding a Remote Widget into a Host App</h1>
-    <p>This host app demonstrates two ways to embed a frontend widget served from GitHub Pages — without including any of the widget's source code.</p>
+    <div class="section-label">Main</div>
+    <nav>
+      <div class="nav-item active" data-tab="overview">
+        <span class="icon">&#9776;</span> Overview
+      </div>
+      <div class="nav-item" data-tab="analytics">
+        <span class="icon">&#9635;</span> Analytics
+        <span class="badge">Embed</span>
+      </div>
+      <div class="nav-item" data-tab="settings">
+        <span class="icon">&#9881;</span> Settings
+      </div>
+    </nav>
+
+    <div class="section-label">Quick links</div>
+    <div class="nav-item"><span class="icon">&#128196;</span> Docs</div>
+    <div class="nav-item"><span class="icon">&#128172;</span> Support</div>
+
+    <div class="user-info">
+      <div class="user-avatar">AK</div>
+      <div class="user-details">
+        <div class="name">Akshit</div>
+        <div class="role">Admin</div>
+      </div>
+    </div>
   </div>
 
-  <!-- Method 1: iframe -->
-  <div class="demo-section" id="iframe-embed">
-    <div class="demo-card">
-      <h3><span class="num">1</span> iFrame Embed</h3>
-      <p>The widget is loaded directly inside an iframe. The host app has zero knowledge of the widget's internals.</p>
-      <div class="code-block">
-        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-        <span class="tag">&lt;iframe</span><br>
-        &nbsp;&nbsp;<span class="attr">src</span>=<span class="string">"https://akshiitgpt.github.io/fe-embed-widget/"</span><br>
-        &nbsp;&nbsp;<span class="attr">width</span>=<span class="string">"380"</span><br>
-        &nbsp;&nbsp;<span class="attr">height</span>=<span class="string">"420"</span><br>
-        &nbsp;&nbsp;<span class="attr">style</span>=<span class="string">"border:none;border-radius:12px"</span><br>
-        <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Top bar -->
+    <div class="topbar">
+      <h1 id="pageTitle">Overview</h1>
+      <div class="actions">
+        <input type="text" class="search-box" placeholder="Search..." />
+        <div class="notif">
+          &#128276;
+          <div class="ping"></div>
+        </div>
       </div>
-      <div class="iframe-demo">
+    </div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <div class="tab active" data-tab="overview">
+        <span class="tab-icon">&#9776;</span> Overview
+      </div>
+      <div class="tab" data-tab="analytics">
+        <span class="tab-icon">&#9635;</span> Analytics
+        <span class="embed-tag">Embedded</span>
+      </div>
+      <div class="tab" data-tab="settings">
+        <span class="tab-icon">&#9881;</span> Settings
+      </div>
+    </div>
+
+    <!-- Tab panels -->
+    <div class="tab-content">
+
+      <!-- Overview: Native -->
+      <div class="tab-panel active" id="panel-overview">
+        <div class="native-content">
+          <div class="welcome-banner">
+            <h2>Welcome back, Akshit</h2>
+            <p>Here's what's happening with your project today. The Analytics tab is loaded from a completely separate deployed frontend via iframe.</p>
+          </div>
+          <div class="cards-grid">
+            <div class="card">
+              <div class="card-icon" style="background:#ede9fe;">&#128200;</div>
+              <h3>Revenue</h3>
+              <p>$48,290 this month. Up 12% from last month's performance.</p>
+            </div>
+            <div class="card">
+              <div class="card-icon" style="background:#dbeafe;">&#128101;</div>
+              <h3>Users</h3>
+              <p>3,847 active users. 214 new sign-ups in the last 7 days.</p>
+            </div>
+            <div class="card">
+              <div class="card-icon" style="background:#dcfce7;">&#9889;</div>
+              <h3>Uptime</h3>
+              <p>99.97% uptime this quarter. 0 incidents in the last 30 days.</p>
+            </div>
+          </div>
+          <div class="cards-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="card">
+              <h3>How the embedding works</h3>
+              <p>The <strong>Analytics</strong> tab loads a frontend from a separate GitHub repo via an iframe. The host dashboard has zero knowledge of the analytics code. Communication happens through postMessage.</p>
+            </div>
+            <div class="card">
+              <h3>Architecture</h3>
+              <p><strong>Host:</strong> fe-embed-host (this dashboard)<br>
+                 <strong>Embedded:</strong> fe-embed-widget (analytics tab)<br>
+                 Both deployed independently to GitHub Pages.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics: EMBEDDED via iframe -->
+      <div class="tab-panel" id="panel-analytics">
         <iframe
-          id="widgetIframe"
+          id="analyticsFrame"
           src="https://akshiitgpt.github.io/fe-embed-widget/"
-          width="380"
-          height="420"
-          style="border:none;border-radius:12px"
-          title="Embedded Widget"
+          title="Analytics Dashboard (Embedded)"
+          allow="clipboard-read; clipboard-write"
         ></iframe>
       </div>
-    </div>
-  </div>
 
-  <!-- Method 2: Script tag -->
-  <div class="demo-section" id="script-embed">
-    <div class="demo-card">
-      <h3><span class="num">2</span> Script Tag Embed</h3>
-      <p>A single script tag injects a floating chat button. Click the chat bubble in the bottom-right corner to try it.</p>
-      <div class="code-block">
-        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-        <span class="tag">&lt;script</span><br>
-        &nbsp;&nbsp;<span class="attr">src</span>=<span class="string">"https://akshiitgpt.github.io/fe-embed-widget/embed.js"</span><br>
-        &nbsp;&nbsp;<span class="attr">data-position</span>=<span class="string">"bottom-right"</span><br>
-        <span class="tag">&gt;&lt;/script&gt;</span>
+      <!-- Settings: Native -->
+      <div class="tab-panel" id="panel-settings">
+        <div class="settings-content">
+          <h2>Settings</h2>
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>Dark mode</h4>
+              <p>Switch to dark theme</p>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>Email notifications</h4>
+              <p>Receive alerts via email</p>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>Embedded tab auto-refresh</h4>
+              <p>Refresh the analytics tab every 60 seconds</p>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>Show embed badge</h4>
+              <p>Display "Embedded" label on tabs loaded from external sources</p>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
       </div>
-      <p style="margin-top:12px;color:#888;font-size:13px;">
-        ^ The floating chat icon in the bottom-right corner is injected by this script.
-      </p>
-    </div>
-  </div>
 
-  <!-- Events -->
-  <div class="demo-section" id="events">
-    <div class="demo-card">
-      <h3><span class="num">3</span> Cross-Origin Communication</h3>
-      <p>The host app listens for postMessage events from the embedded widget. Try sending a message in the iframe above.</p>
-      <div class="event-log" id="eventLog">
-        <div class="log-entry"><span class="timestamp">[waiting]</span> Send a message in the widget to see events here...</div>
+    </div>
+
+    <!-- Status bar -->
+    <div class="status-bar">
+      <div>
+        <span class="status-dot"></span> All systems operational
+      </div>
+      <div id="embedStatus" class="embed-status">
+        Analytics tab: loading...
       </div>
     </div>
+
   </div>
-
-  <footer>
-    POC: Embeddable Frontend via GitHub Pages &mdash; Host app does NOT contain the widget code.
-  </footer>
-
-  <!-- Embed via script tag (Method 2) -->
-  <script src="https://akshiitgpt.github.io/fe-embed-widget/embed.js" data-position="bottom-right"></script>
 
   <script>
-    // Listen for postMessage from the embedded widget
-    var eventLog = document.getElementById('eventLog');
-    var firstEvent = true;
+    // Tab switching
+    var tabs = document.querySelectorAll('.tab, .nav-item[data-tab]');
+    var panels = document.querySelectorAll('.tab-panel');
+    var pageTitle = document.getElementById('pageTitle');
+    var titles = { overview: 'Overview', analytics: 'Analytics (Embedded)', settings: 'Settings' };
 
-    window.addEventListener('message', function(e) {
-      if (e.data && (e.data.type === 'widget-message' || e.data.type === 'widget-reply')) {
-        if (firstEvent) {
-          eventLog.innerHTML = '';
-          firstEvent = false;
-        }
-        var time = new Date().toLocaleTimeString();
-        var direction = e.data.type === 'widget-message' ? 'USER' : 'BOT';
-        var entry = document.createElement('div');
-        entry.className = 'log-entry';
-        entry.innerHTML = '<span class="timestamp">[' + time + ']</span> ' + direction + ': ' + e.data.text;
-        eventLog.appendChild(entry);
-        eventLog.scrollTop = eventLog.scrollHeight;
-      }
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var target = this.getAttribute('data-tab');
+        if (!target) return;
+
+        // Update tabs
+        document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('.nav-item[data-tab]').forEach(function(t) { t.classList.remove('active'); });
+
+        document.querySelectorAll('[data-tab="' + target + '"]').forEach(function(t) {
+          t.classList.add('active');
+        });
+
+        // Update panels
+        panels.forEach(function(p) { p.classList.remove('active'); });
+        document.getElementById('panel-' + target).classList.add('active');
+
+        pageTitle.textContent = titles[target] || target;
+      });
     });
 
-    function copyCode(btn) {
-      var code = btn.parentElement.textContent.replace('Copy', '').trim();
-      navigator.clipboard.writeText(code);
-      btn.textContent = 'Copied!';
-      setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
-    }
+    // Listen for postMessage from embedded analytics tab
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'embed-loaded') {
+        document.getElementById('embedStatus').textContent =
+          'Analytics tab: connected | ' + e.data.stats.length + ' metrics loaded';
+      }
+      if (e.data && e.data.type === 'embed-error') {
+        document.getElementById('embedStatus').textContent =
+          'Analytics tab: error - ' + e.data.error;
+        document.getElementById('embedStatus').style.color = '#dc2626';
+      }
+      if (e.data && e.data.type === 'embed-filter-change') {
+        console.log('[Host] Embedded tab changed time range to:', e.data.range);
+      }
+    });
   </script>
 </body>
 </html>
