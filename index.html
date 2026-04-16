@@ -47,6 +47,14 @@
 
     .sidebar nav { flex: 1; }
 
+    .sidebar .section-label {
+      padding: 16px 20px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #585b70;
+    }
+
     .sidebar .nav-item {
       display: flex;
       align-items: center;
@@ -70,29 +78,19 @@
       border-left-color: #4f46e5;
     }
 
-    .sidebar .nav-item .icon {
-      width: 20px;
-      text-align: center;
-      font-size: 16px;
-    }
+    .sidebar .nav-item .icon { width: 20px; text-align: center; font-size: 16px; }
 
     .sidebar .nav-item .badge {
       margin-left: auto;
-      background: #4f46e5;
-      color: white;
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 10px;
+      font-size: 9px;
+      padding: 2px 7px;
+      border-radius: 4px;
       font-weight: 600;
+      text-transform: uppercase;
     }
 
-    .sidebar .section-label {
-      padding: 16px 20px 8px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #585b70;
-    }
+    .badge-iframe { background: #312e81; color: #a5b4fc; }
+    .badge-direct { background: #064e3b; color: #6ee7b7; }
 
     .sidebar .user-info {
       padding: 16px 20px;
@@ -119,7 +117,7 @@
     .sidebar .user-details .name { color: white; font-weight: 500; }
     .sidebar .user-details .role { color: #585b70; }
 
-    /* ── Main content ── */
+    /* ── Main ── */
     .main {
       flex: 1;
       display: flex;
@@ -127,6 +125,7 @@
       overflow: hidden;
     }
 
+    /* ── Topbar ── */
     .topbar {
       background: white;
       padding: 16px 32px;
@@ -137,16 +136,9 @@
       flex-shrink: 0;
     }
 
-    .topbar h1 {
-      font-size: 20px;
-      font-weight: 700;
-    }
+    .topbar h1 { font-size: 20px; font-weight: 700; }
 
-    .topbar .actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .topbar .actions { display: flex; align-items: center; gap: 12px; }
 
     .topbar .search-box {
       padding: 8px 16px;
@@ -158,30 +150,6 @@
     }
 
     .topbar .search-box:focus { border-color: #4f46e5; }
-
-    .topbar .notif {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: #f5f5f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 16px;
-      position: relative;
-    }
-
-    .topbar .notif .ping {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 8px;
-      height: 8px;
-      background: #ef4444;
-      border-radius: 50%;
-      border: 2px solid white;
-    }
 
     /* ── Tab bar ── */
     .tab-bar {
@@ -207,23 +175,20 @@
     }
 
     .tab:hover { color: #555; }
-
-    .tab.active {
-      color: #4f46e5;
-      border-bottom-color: #4f46e5;
-    }
+    .tab.active { color: #4f46e5; border-bottom-color: #4f46e5; }
 
     .tab .tab-icon { font-size: 15px; }
 
     .tab .embed-tag {
       font-size: 9px;
-      background: #ede9fe;
-      color: #7c3aed;
       padding: 2px 6px;
       border-radius: 4px;
       font-weight: 600;
       text-transform: uppercase;
     }
+
+    .embed-tag-iframe { background: #ede9fe; color: #7c3aed; }
+    .embed-tag-direct { background: #d1fae5; color: #059669; }
 
     /* ── Tab panels ── */
     .tab-content {
@@ -247,10 +212,8 @@
       border: none;
     }
 
-    /* ── Native tab content ── */
-    .native-content {
-      padding: 32px;
-    }
+    /* ── Native content ── */
+    .native-content { padding: 32px; }
 
     .welcome-banner {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
@@ -263,40 +226,122 @@
     .welcome-banner h2 { font-size: 24px; margin-bottom: 8px; }
     .welcome-banner p { opacity: 0.85; font-size: 14px; line-height: 1.6; }
 
-    .cards-grid {
+    .method-cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
       margin-bottom: 24px;
     }
 
-    .card {
+    .method-card {
       background: white;
       border-radius: 12px;
       padding: 24px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
     }
 
-    .card .card-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
+    .method-card:hover { border-color: #e0e7ff; }
+
+    .method-card .method-badge {
+      display: inline-block;
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
       margin-bottom: 12px;
     }
 
-    .card h3 { font-size: 15px; margin-bottom: 6px; }
-    .card p { font-size: 13px; color: #888; line-height: 1.5; }
+    .method-badge-iframe { background: #ede9fe; color: #7c3aed; }
+    .method-badge-direct { background: #d1fae5; color: #059669; }
 
-    /* Settings tab */
-    .settings-content {
-      padding: 32px;
-      max-width: 600px;
+    .method-card h3 { font-size: 16px; margin-bottom: 8px; }
+    .method-card p { font-size: 13px; color: #666; line-height: 1.5; margin-bottom: 12px; }
+
+    .method-card .feature-list {
+      list-style: none;
+      font-size: 12px;
+      color: #555;
     }
 
+    .method-card .feature-list li {
+      padding: 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .method-card .feature-list li::before {
+      content: '\2713';
+      color: #16a34a;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .code-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      margin-bottom: 24px;
+    }
+
+    .code-card h3 { font-size: 15px; margin-bottom: 4px; }
+    .code-card .subtitle { font-size: 12px; color: #888; margin-bottom: 16px; }
+
+    .code-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .code-tab {
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #888;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+
+    .code-tab:hover { color: #555; }
+    .code-tab.active { color: #4f46e5; border-bottom-color: #4f46e5; }
+
+    .code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px;
+      border-radius: 0 0 10px 10px;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+      display: none;
+    }
+
+    .code-block.active { display: block; }
+
+    .code-block .cm { color: #6c7086; }
+    .code-block .kw { color: #cba6f7; }
+    .code-block .str { color: #a6e3a1; }
+    .code-block .tag { color: #89b4fa; }
+    .code-block .fn { color: #f9e2af; }
+
+    /* ── Embed container styling ── */
+    .embed-container {
+      padding: 24px;
+      background: #f8f9fb;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    /* ── Settings ── */
+    .settings-content { padding: 32px; max-width: 600px; }
     .settings-content h2 { font-size: 20px; margin-bottom: 20px; }
 
     .setting-row {
@@ -311,27 +356,17 @@
     .setting-row .setting-info p { font-size: 12px; color: #888; }
 
     .toggle {
-      width: 44px;
-      height: 24px;
-      border-radius: 12px;
-      background: #ddd;
-      position: relative;
-      cursor: pointer;
-      transition: background 0.2s;
+      width: 44px; height: 24px; border-radius: 12px;
+      background: #ddd; position: relative; cursor: pointer; transition: background 0.2s;
     }
 
     .toggle.on { background: #4f46e5; }
 
     .toggle::after {
       content: '';
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: white;
-      transition: transform 0.2s;
+      position: absolute; top: 3px; left: 3px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: white; transition: transform 0.2s;
       box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     }
 
@@ -352,40 +387,40 @@
 
     .status-bar .status-dot {
       display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #a6e3a1;
-      margin-right: 6px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #a6e3a1; margin-right: 6px;
     }
 
-    .status-bar .embed-status { color: #7c3aed; font-weight: 500; }
+    .status-bar .embed-status { font-weight: 500; }
+    .status-iframe { color: #7c3aed; }
+    .status-direct { color: #059669; }
   </style>
 </head>
 <body>
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <div class="brand">
-      <div class="dot"></div>
-      Acme Dashboard
-    </div>
+    <div class="brand"><div class="dot"></div> Acme Dashboard</div>
 
     <div class="section-label">Main</div>
     <nav>
       <div class="nav-item active" data-tab="overview">
         <span class="icon">&#9776;</span> Overview
       </div>
-      <div class="nav-item" data-tab="analytics">
+      <div class="nav-item" data-tab="analytics-iframe">
         <span class="icon">&#9635;</span> Analytics
-        <span class="badge">Embed</span>
+        <span class="badge badge-iframe">iframe</span>
+      </div>
+      <div class="nav-item" data-tab="analytics-direct">
+        <span class="icon">&#9635;</span> Analytics
+        <span class="badge badge-direct">direct</span>
       </div>
       <div class="nav-item" data-tab="settings">
         <span class="icon">&#9881;</span> Settings
       </div>
     </nav>
 
-    <div class="section-label">Quick links</div>
+    <div class="section-label">Links</div>
     <div class="nav-item"><span class="icon">&#128196;</span> Docs</div>
     <div class="nav-item"><span class="icon">&#128172;</span> Support</div>
 
@@ -401,15 +436,10 @@
   <!-- Main -->
   <div class="main">
 
-    <!-- Top bar -->
     <div class="topbar">
       <h1 id="pageTitle">Overview</h1>
       <div class="actions">
         <input type="text" class="search-box" placeholder="Search..." />
-        <div class="notif">
-          &#128276;
-          <div class="ping"></div>
-        </div>
       </div>
     </div>
 
@@ -418,9 +448,13 @@
       <div class="tab active" data-tab="overview">
         <span class="tab-icon">&#9776;</span> Overview
       </div>
-      <div class="tab" data-tab="analytics">
+      <div class="tab" data-tab="analytics-iframe">
         <span class="tab-icon">&#9635;</span> Analytics
-        <span class="embed-tag">Embedded</span>
+        <span class="embed-tag embed-tag-iframe">iframe</span>
+      </div>
+      <div class="tab" data-tab="analytics-direct">
+        <span class="tab-icon">&#9635;</span> Analytics
+        <span class="embed-tag embed-tag-direct">Direct Embed</span>
       </div>
       <div class="tab" data-tab="settings">
         <span class="tab-icon">&#9881;</span> Settings
@@ -434,49 +468,89 @@
       <div class="tab-panel active" id="panel-overview">
         <div class="native-content">
           <div class="welcome-banner">
-            <h2>Welcome back, Akshit</h2>
-            <p>Here's what's happening with your project today. The Analytics tab is loaded from a completely separate deployed frontend via iframe.</p>
+            <h2>Embed SDK &mdash; Two Ways</h2>
+            <p>This dashboard demonstrates both embedding methods, like Clerk.com components. The Analytics tab is available in <strong>iframe mode</strong> (isolated, hosted page) and <strong>direct embed mode</strong> (SDK mounts into your DOM). Both call real APIs and render the same dashboard &mdash; zero widget source code in this repo.</p>
           </div>
-          <div class="cards-grid">
-            <div class="card">
-              <div class="card-icon" style="background:#ede9fe;">&#128200;</div>
-              <h3>Revenue</h3>
-              <p>$48,290 this month. Up 12% from last month's performance.</p>
+
+          <div class="method-cards">
+            <div class="method-card">
+              <span class="method-badge method-badge-iframe">Method 1</span>
+              <h3>iframe Embed</h3>
+              <p>Loads the full hosted page inside an iframe. Complete isolation between host and embedded frontend.</p>
+              <ul class="feature-list">
+                <li>Full CSS/JS isolation</li>
+                <li>Separate deployment lifecycle</li>
+                <li>Communication via postMessage</li>
+                <li>Best for: untrusted or third-party content</li>
+              </ul>
             </div>
-            <div class="card">
-              <div class="card-icon" style="background:#dbeafe;">&#128101;</div>
-              <h3>Users</h3>
-              <p>3,847 active users. 214 new sign-ups in the last 7 days.</p>
-            </div>
-            <div class="card">
-              <div class="card-icon" style="background:#dcfce7;">&#9889;</div>
-              <h3>Uptime</h3>
-              <p>99.97% uptime this quarter. 0 incidents in the last 30 days.</p>
-            </div>
-          </div>
-          <div class="cards-grid" style="grid-template-columns: 1fr 1fr;">
-            <div class="card">
-              <h3>How the embedding works</h3>
-              <p>The <strong>Analytics</strong> tab loads a frontend from a separate GitHub repo via an iframe. The host dashboard has zero knowledge of the analytics code. Communication happens through postMessage.</p>
-            </div>
-            <div class="card">
-              <h3>Architecture</h3>
-              <p><strong>Host:</strong> fe-embed-host (this dashboard)<br>
-                 <strong>Embedded:</strong> fe-embed-widget (analytics tab)<br>
-                 Both deployed independently to GitHub Pages.</p>
+            <div class="method-card">
+              <span class="method-badge method-badge-direct">Method 2</span>
+              <h3>Direct Embed (SDK)</h3>
+              <p>A JavaScript SDK mounts the component directly into your DOM. Like Clerk's &lt;SignIn /&gt; components.</p>
+              <ul class="feature-list">
+                <li>Renders in host DOM, no iframe</li>
+                <li>Direct JS callbacks (onLoad, onError)</li>
+                <li>Inherits host context &amp; auth</li>
+                <li>Best for: first-party embedded dashboards</li>
+              </ul>
             </div>
           </div>
+
+          <div class="code-card">
+            <h3>Integration Code</h3>
+            <p class="subtitle">Load the SDK once, then use either method</p>
+            <div class="code-tabs">
+              <div class="code-tab active" data-code="iframe">iframe</div>
+              <div class="code-tab" data-code="direct">Direct Embed</div>
+              <div class="code-tab" data-code="sdk">SDK Script</div>
+            </div>
+<div class="code-block active" data-code="iframe"><span class="cm">// Method 1: iframe embed</span>
+<span class="kw">const</span> widget = EmbedWidget.<span class="fn">iframe</span>(<span class="str">'#container'</span>, {
+  title: <span class="str">'Analytics Dashboard'</span>,
+  <span class="fn">onLoad</span>: (data) => console.log(<span class="str">'Loaded'</span>, data),
+  <span class="fn">onError</span>: (err)  => console.error(err),
+});
+
+widget.<span class="fn">refresh</span>();   <span class="cm">// trigger reload</span>
+widget.<span class="fn">unmount</span>();   <span class="cm">// remove widget</span></div>
+<div class="code-block" data-code="direct"><span class="cm">// Method 2: direct embed — mounts into your DOM</span>
+<span class="kw">const</span> widget = EmbedWidget.<span class="fn">mount</span>(<span class="str">'#container'</span>, {
+  title: <span class="str">'Analytics Overview'</span>,
+  <span class="fn">onLoad</span>: (data) => console.log(<span class="str">'Loaded'</span>, data),
+  <span class="fn">onError</span>: (err)  => console.error(err),
+  <span class="fn">onFilterChange</span>: (range) => console.log(<span class="str">'Filter:'</span>, range),
+});
+
+widget.<span class="fn">refresh</span>();   <span class="cm">// re-fetch and re-render</span>
+widget.<span class="fn">unmount</span>();   <span class="cm">// clean up</span></div>
+<div class="code-block" data-code="sdk"><span class="cm">&lt;!-- Add this to your HTML --&gt;</span>
+<span class="tag">&lt;script</span> src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/sdk.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="cm">&lt;!-- Then use either method --&gt;</span>
+<span class="tag">&lt;div</span> id=<span class="str">"analytics"</span><span class="tag">&gt;&lt;/div&gt;</span>
+<span class="tag">&lt;script&gt;</span>
+  EmbedWidget.<span class="fn">mount</span>(<span class="str">'#analytics'</span>);   <span class="cm">// direct</span>
+  <span class="cm">// OR</span>
+  EmbedWidget.<span class="fn">iframe</span>(<span class="str">'#analytics'</span>);  <span class="cm">// iframe</span>
+<span class="tag">&lt;/script&gt;</span></div>
+          </div>
+
         </div>
       </div>
 
-      <!-- Analytics: EMBEDDED via iframe -->
-      <div class="tab-panel" id="panel-analytics">
+      <!-- Analytics: IFRAME -->
+      <div class="tab-panel" id="panel-analytics-iframe">
         <iframe
           id="analyticsFrame"
           src="https://akshiitgpt.github.io/fe-embed-widget/"
-          title="Analytics Dashboard (Embedded)"
-          allow="clipboard-read; clipboard-write"
+          title="Analytics (iframe)"
         ></iframe>
+      </div>
+
+      <!-- Analytics: DIRECT EMBED -->
+      <div class="tab-panel" id="panel-analytics-direct">
+        <div class="embed-container" id="directEmbedTarget"></div>
       </div>
 
       <!-- Settings: Native -->
@@ -484,31 +558,15 @@
         <div class="settings-content">
           <h2>Settings</h2>
           <div class="setting-row">
-            <div class="setting-info">
-              <h4>Dark mode</h4>
-              <p>Switch to dark theme</p>
-            </div>
+            <div class="setting-info"><h4>Dark mode</h4><p>Switch to dark theme</p></div>
             <div class="toggle" onclick="this.classList.toggle('on')"></div>
           </div>
           <div class="setting-row">
-            <div class="setting-info">
-              <h4>Email notifications</h4>
-              <p>Receive alerts via email</p>
-            </div>
+            <div class="setting-info"><h4>Email notifications</h4><p>Receive alerts via email</p></div>
             <div class="toggle on" onclick="this.classList.toggle('on')"></div>
           </div>
           <div class="setting-row">
-            <div class="setting-info">
-              <h4>Embedded tab auto-refresh</h4>
-              <p>Refresh the analytics tab every 60 seconds</p>
-            </div>
-            <div class="toggle" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info">
-              <h4>Show embed badge</h4>
-              <p>Display "Embedded" label on tabs loaded from external sources</p>
-            </div>
+            <div class="setting-info"><h4>Default embed method</h4><p>Choose iframe or direct for analytics tab</p></div>
             <div class="toggle on" onclick="this.classList.toggle('on')"></div>
           </div>
         </div>
@@ -518,57 +576,108 @@
 
     <!-- Status bar -->
     <div class="status-bar">
-      <div>
-        <span class="status-dot"></span> All systems operational
-      </div>
-      <div id="embedStatus" class="embed-status">
-        Analytics tab: loading...
-      </div>
+      <div><span class="status-dot"></span> All systems operational</div>
+      <div id="embedStatus" class="embed-status">Ready</div>
     </div>
 
   </div>
 
+  <!-- Load the SDK from the widget repo -->
+  <script src="https://akshiitgpt.github.io/fe-embed-widget/sdk.js"></script>
+
   <script>
-    // Tab switching
-    var tabs = document.querySelectorAll('.tab, .nav-item[data-tab]');
+    // ── Tab switching ──
+    var allTabs = document.querySelectorAll('.tab[data-tab], .nav-item[data-tab]');
     var panels = document.querySelectorAll('.tab-panel');
     var pageTitle = document.getElementById('pageTitle');
-    var titles = { overview: 'Overview', analytics: 'Analytics (Embedded)', settings: 'Settings' };
+    var embedStatus = document.getElementById('embedStatus');
+    var directMounted = false;
+    var directHandle = null;
 
-    tabs.forEach(function(tab) {
+    var titles = {
+      'overview': 'Overview',
+      'analytics-iframe': 'Analytics (iframe)',
+      'analytics-direct': 'Analytics (Direct Embed)',
+      'settings': 'Settings'
+    };
+
+    allTabs.forEach(function(tab) {
       tab.addEventListener('click', function() {
         var target = this.getAttribute('data-tab');
         if (!target) return;
 
-        // Update tabs
-        document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+        // Update active state
+        document.querySelectorAll('.tab[data-tab]').forEach(function(t) { t.classList.remove('active'); });
         document.querySelectorAll('.nav-item[data-tab]').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('[data-tab="' + target + '"]').forEach(function(t) { t.classList.add('active'); });
 
-        document.querySelectorAll('[data-tab="' + target + '"]').forEach(function(t) {
-          t.classList.add('active');
-        });
-
-        // Update panels
+        // Show panel
         panels.forEach(function(p) { p.classList.remove('active'); });
         document.getElementById('panel-' + target).classList.add('active');
 
         pageTitle.textContent = titles[target] || target;
+
+        // Lazy-mount the direct embed on first visit
+        if (target === 'analytics-direct' && !directMounted) {
+          directMounted = true;
+          if (typeof EmbedWidget !== 'undefined') {
+            directHandle = EmbedWidget.mount('#directEmbedTarget', {
+              title: 'Analytics Overview',
+              onLoad: function(data) {
+                embedStatus.textContent = 'Direct embed: connected | ' + data.stats.length + ' metrics';
+                embedStatus.className = 'embed-status status-direct';
+              },
+              onError: function(err) {
+                embedStatus.textContent = 'Direct embed: error';
+                embedStatus.className = 'embed-status';
+                embedStatus.style.color = '#dc2626';
+              },
+              onFilterChange: function(range) {
+                console.log('[Host] Direct embed filter changed:', range);
+              }
+            });
+          } else {
+            document.getElementById('directEmbedTarget').innerHTML =
+              '<div style="padding:60px;text-align:center;color:#888;">SDK not loaded yet. Waiting for GitHub Pages...</div>';
+          }
+        }
+
+        // Update status bar
+        if (target === 'analytics-iframe') {
+          embedStatus.textContent = 'iframe embed: connected';
+          embedStatus.className = 'embed-status status-iframe';
+        } else if (target === 'analytics-direct') {
+          if (directHandle) {
+            embedStatus.textContent = 'Direct embed: active';
+            embedStatus.className = 'embed-status status-direct';
+          }
+        } else {
+          embedStatus.textContent = 'Ready';
+          embedStatus.className = 'embed-status';
+        }
       });
     });
 
-    // Listen for postMessage from embedded analytics tab
+    // ── Code tab switching ──
+    document.querySelectorAll('.code-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var target = this.getAttribute('data-code');
+        document.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('.code-block').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        document.querySelector('.code-block[data-code="' + target + '"]').classList.add('active');
+      });
+    });
+
+    // ── Listen for iframe postMessage ──
     window.addEventListener('message', function(e) {
       if (e.data && e.data.type === 'embed-loaded') {
-        document.getElementById('embedStatus').textContent =
-          'Analytics tab: connected | ' + e.data.stats.length + ' metrics loaded';
+        embedStatus.textContent = 'iframe embed: connected | ' + e.data.stats.length + ' metrics loaded';
+        embedStatus.className = 'embed-status status-iframe';
       }
       if (e.data && e.data.type === 'embed-error') {
-        document.getElementById('embedStatus').textContent =
-          'Analytics tab: error - ' + e.data.error;
-        document.getElementById('embedStatus').style.color = '#dc2626';
-      }
-      if (e.data && e.data.type === 'embed-filter-change') {
-        console.log('[Host] Embedded tab changed time range to:', e.data.range);
+        embedStatus.textContent = 'iframe embed: error - ' + e.data.error;
+        embedStatus.style.color = '#dc2626';
       }
     });
   </script>
