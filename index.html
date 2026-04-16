@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>EmbedWidget — Component Showcase</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -17,38 +17,51 @@
 
     /* ── Sidebar ── */
     .sidebar {
-      width: 240px;
+      width: 260px;
       background: #1e1e2e;
       color: #cdd6f4;
       padding: 20px 0;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      z-index: 50;
     }
 
     .sidebar .brand {
-      padding: 0 20px 24px;
-      font-size: 18px;
-      font-weight: 700;
-      color: white;
+      padding: 0 20px 20px;
       border-bottom: 1px solid #313244;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      margin-bottom: 8px;
     }
 
-    .sidebar .brand .dot {
+    .sidebar .brand h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar .brand h2 .dot {
       width: 10px;
       height: 10px;
       border-radius: 50%;
       background: #a6e3a1;
     }
 
-    .sidebar nav { flex: 1; }
+    .sidebar .brand p {
+      font-size: 11px;
+      color: #585b70;
+      margin-top: 4px;
+    }
 
     .sidebar .section-label {
-      padding: 16px 20px 8px;
+      padding: 14px 20px 6px;
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -58,9 +71,9 @@
     .sidebar .nav-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 20px;
-      font-size: 14px;
+      gap: 10px;
+      padding: 10px 20px;
+      font-size: 13px;
       color: #a6adc8;
       cursor: pointer;
       transition: all 0.15s;
@@ -78,238 +91,365 @@
       border-left-color: #4f46e5;
     }
 
-    .sidebar .nav-item .icon { width: 20px; text-align: center; font-size: 16px; }
+    .sidebar .nav-item .icon { width: 18px; text-align: center; font-size: 14px; }
 
-    .sidebar .nav-item .badge {
+    .sidebar .nav-item .method-badge {
       margin-left: auto;
-      font-size: 9px;
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-weight: 600;
+      font-size: 8px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
-    .badge-iframe { background: #312e81; color: #a5b4fc; }
-    .badge-direct { background: #064e3b; color: #6ee7b7; }
+    .badge-both { background: #312e81; color: #a5b4fc; }
 
-    .sidebar .user-info {
+    .sidebar .version-info {
       padding: 16px 20px;
       border-top: 1px solid #313244;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      margin-top: auto;
+      font-size: 11px;
+      color: #585b70;
     }
-
-    .sidebar .user-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      color: white;
-      font-weight: 600;
-    }
-
-    .sidebar .user-details { font-size: 12px; }
-    .sidebar .user-details .name { color: white; font-weight: 500; }
-    .sidebar .user-details .role { color: #585b70; }
 
     /* ── Main ── */
     .main {
       flex: 1;
+      margin-left: 260px;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      min-height: 100vh;
     }
 
     /* ── Topbar ── */
     .topbar {
       background: white;
-      padding: 16px 32px;
+      padding: 14px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 40;
     }
 
-    .topbar h1 { font-size: 20px; font-weight: 700; }
+    .topbar h1 { font-size: 18px; font-weight: 700; }
 
-    .topbar .actions { display: flex; align-items: center; gap: 12px; }
-
-    .topbar .search-box {
-      padding: 8px 16px;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 13px;
-      width: 220px;
-      outline: none;
-    }
-
-    .topbar .search-box:focus { border-color: #4f46e5; }
-
-    /* ── Tab bar ── */
-    .tab-bar {
-      background: white;
-      padding: 0 32px;
-      display: flex;
-      gap: 0;
-      border-bottom: 1px solid #e5e7eb;
-      flex-shrink: 0;
-    }
-
-    .tab {
-      padding: 14px 20px;
-      font-size: 13px;
-      font-weight: 500;
-      color: #888;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.15s;
+    .topbar .topbar-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 16px;
     }
 
-    .tab:hover { color: #555; }
-    .tab.active { color: #4f46e5; border-bottom-color: #4f46e5; }
-
-    .tab .tab-icon { font-size: 15px; }
-
-    .tab .embed-tag {
-      font-size: 9px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 600;
-      text-transform: uppercase;
+    .topbar .gh-link {
+      font-size: 12px;
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 6px 14px;
+      border: 1px solid #e0e7ff;
+      border-radius: 8px;
+      transition: all 0.15s;
     }
 
-    .embed-tag-iframe { background: #ede9fe; color: #7c3aed; }
-    .embed-tag-direct { background: #d1fae5; color: #059669; }
+    .topbar .gh-link:hover { background: #f5f3ff; }
 
-    /* ── Tab panels ── */
-    .tab-content {
-      flex: 1;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .tab-panel {
+    /* ── Pages ── */
+    .page {
       display: none;
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
+      flex: 1;
     }
 
-    .tab-panel.active { display: block; }
+    .page.active { display: block; }
 
-    .tab-panel iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+    /* ── Overview page ── */
+    .overview-content { padding: 32px; max-width: 1100px; }
 
-    /* ── Native content ── */
-    .native-content { padding: 32px; }
-
-    .welcome-banner {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    .hero-banner {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a78bfa 100%);
       color: white;
       border-radius: 16px;
-      padding: 32px;
-      margin-bottom: 24px;
+      padding: 40px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .welcome-banner h2 { font-size: 24px; margin-bottom: 8px; }
-    .welcome-banner p { opacity: 0.85; font-size: 14px; line-height: 1.6; }
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
 
-    .method-cards {
+    .hero-banner h2 { font-size: 28px; margin-bottom: 10px; font-weight: 800; }
+    .hero-banner p { opacity: 0.9; font-size: 15px; line-height: 1.6; max-width: 600px; }
+
+    .hero-banner .hero-badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .hero-badge {
+      background: rgba(255,255,255,0.15);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      backdrop-filter: blur(4px);
+    }
+
+    .method-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
 
-    .method-card {
+    .method-explainer {
       background: white;
       border-radius: 12px;
       padding: 24px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.06);
       border: 2px solid transparent;
-      transition: border-color 0.2s;
+      transition: all 0.2s;
     }
 
-    .method-card:hover { border-color: #e0e7ff; }
+    .method-explainer:hover { border-color: #e0e7ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 
-    .method-card .method-badge {
+    .method-tag {
       display: inline-block;
       font-size: 10px;
       padding: 3px 10px;
       border-radius: 6px;
       font-weight: 700;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
-    .method-badge-iframe { background: #ede9fe; color: #7c3aed; }
-    .method-badge-direct { background: #d1fae5; color: #059669; }
+    .method-tag-iframe { background: #ede9fe; color: #7c3aed; }
+    .method-tag-direct { background: #d1fae5; color: #059669; }
 
-    .method-card h3 { font-size: 16px; margin-bottom: 8px; }
-    .method-card p { font-size: 13px; color: #666; line-height: 1.5; margin-bottom: 12px; }
+    .method-explainer h3 { font-size: 16px; margin-bottom: 6px; }
+    .method-explainer p { font-size: 13px; color: #666; line-height: 1.5; }
 
-    .method-card .feature-list {
+    .feature-list {
       list-style: none;
+      margin-top: 10px;
       font-size: 12px;
       color: #555;
     }
 
-    .method-card .feature-list li {
+    .feature-list li {
       padding: 3px 0;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .method-card .feature-list li::before {
-      content: '\2713';
-      color: #16a34a;
+    .feature-list li::before { content: '\2713'; color: #16a34a; font-weight: 700; font-size: 11px; }
+
+    /* Component gallery grid */
+    .gallery-title {
+      font-size: 20px;
       font-weight: 700;
-      font-size: 11px;
+      margin-bottom: 4px;
     }
 
-    .code-card {
+    .gallery-subtitle {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .gallery-card {
       background: white;
       border-radius: 12px;
-      padding: 24px;
+      overflow: hidden;
       box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .gallery-card:hover { border-color: #c7d2fe; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+
+    .gallery-card-preview {
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+      background: #f8f9fb;
+    }
+
+    .gallery-card-preview::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(transparent, rgba(248,249,251,0.95));
+      pointer-events: none;
+    }
+
+    .gallery-card-preview .preview-inner {
+      transform: scale(0.55);
+      transform-origin: top left;
+      width: 182%;
+      pointer-events: none;
+    }
+
+    .gallery-card-info {
+      padding: 16px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .gallery-card-info h4 {
+      font-size: 14px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gallery-card-info p { font-size: 11px; color: #888; }
+
+    .gallery-card-info .card-tags {
+      display: flex;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .card-tag {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .card-tag-api { background: #dbeafe; color: #2563eb; }
+    .card-tag-static { background: #f3e8ff; color: #9333ea; }
+    .card-tag-interactive { background: #fef3c7; color: #d97706; }
+
+    /* ── Component detail page ── */
+    .detail-content { padding: 32px; max-width: 1100px; }
+
+    .detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 24px;
     }
 
-    .code-card h3 { font-size: 15px; margin-bottom: 4px; }
-    .code-card .subtitle { font-size: 12px; color: #888; margin-bottom: 16px; }
+    .detail-header .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #4f46e5;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .detail-header .back-btn:hover { text-decoration: underline; }
+
+    .detail-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .detail-title-row h2 { font-size: 24px; font-weight: 700; }
+    .detail-desc { font-size: 14px; color: #666; margin-bottom: 24px; }
+
+    /* Embed mode toggle */
+    .mode-toggle {
+      display: inline-flex;
+      background: #f0f0f5;
+      border-radius: 10px;
+      padding: 3px;
+      margin-bottom: 20px;
+    }
+
+    .mode-toggle .mode-btn {
+      padding: 8px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 8px;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .mode-toggle .mode-btn.active {
+      background: white;
+      color: #1a1a2e;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Preview container */
+    .preview-frame {
+      background: #f8f9fb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      min-height: 400px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .preview-frame iframe {
+      width: 100%;
+      min-height: 400px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    /* Code snippet */
+    .code-section {
+      margin-bottom: 24px;
+    }
+
+    .code-section h3 { font-size: 15px; margin-bottom: 4px; }
+    .code-section .code-desc { font-size: 12px; color: #888; margin-bottom: 12px; }
 
     .code-tabs {
       display: flex;
       gap: 0;
-      margin-bottom: 0;
       border-bottom: 1px solid #e5e7eb;
     }
 
-    .code-tab {
+    .code-tab-btn {
       padding: 8px 16px;
       font-size: 12px;
       font-weight: 600;
       color: #888;
       cursor: pointer;
+      border: none;
+      background: none;
       border-bottom: 2px solid transparent;
       transition: all 0.15s;
     }
 
-    .code-tab:hover { color: #555; }
-    .code-tab.active { color: #4f46e5; border-bottom-color: #4f46e5; }
+    .code-tab-btn:hover { color: #555; }
+    .code-tab-btn.active { color: #4f46e5; border-bottom-color: #4f46e5; }
 
     .code-block {
       background: #1e1e2e;
@@ -322,55 +462,66 @@
       overflow-x: auto;
       white-space: pre;
       display: none;
+      position: relative;
     }
 
     .code-block.active { display: block; }
 
-    .code-block .cm { color: #6c7086; }
-    .code-block .kw { color: #cba6f7; }
-    .code-block .str { color: #a6e3a1; }
-    .code-block .tag { color: #89b4fa; }
-    .code-block .fn { color: #f9e2af; }
+    .cm { color: #6c7086; }
+    .kw { color: #cba6f7; }
+    .str { color: #a6e3a1; }
+    .tg { color: #89b4fa; }
+    .fn { color: #f9e2af; }
 
-    /* ── Embed container styling ── */
-    .embed-container {
-      padding: 24px;
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      color: #a6adc8;
+      padding: 4px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .copy-btn:hover { background: rgba(255,255,255,0.15); }
+
+    /* ── Props table ── */
+    .props-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .props-table th {
+      text-align: left;
+      padding: 12px 16px;
       background: #f8f9fb;
-      height: 100%;
-      overflow-y: auto;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #888;
+      font-weight: 600;
     }
 
-    /* ── Settings ── */
-    .settings-content { padding: 32px; max-width: 600px; }
-    .settings-content h2 { font-size: 20px; margin-bottom: 20px; }
-
-    .setting-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 0;
-      border-bottom: 1px solid #f0f0f0;
+    .props-table td {
+      padding: 12px 16px;
+      border-top: 1px solid #f0f0f0;
     }
 
-    .setting-row .setting-info h4 { font-size: 14px; margin-bottom: 2px; }
-    .setting-row .setting-info p { font-size: 12px; color: #888; }
-
-    .toggle {
-      width: 44px; height: 24px; border-radius: 12px;
-      background: #ddd; position: relative; cursor: pointer; transition: background 0.2s;
+    .props-table code {
+      background: #f0f2f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: 'SF Mono', monospace;
     }
-
-    .toggle.on { background: #4f46e5; }
-
-    .toggle::after {
-      content: '';
-      position: absolute; top: 3px; left: 3px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: white; transition: transform 0.2s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-    }
-
-    .toggle.on::after { transform: translateX(20px); }
 
     /* ── Status bar ── */
     .status-bar {
@@ -382,54 +533,62 @@
       justify-content: space-between;
       font-size: 11px;
       color: #999;
-      flex-shrink: 0;
+      margin-left: 0;
     }
 
     .status-bar .status-dot {
       display: inline-block;
       width: 6px; height: 6px; border-radius: 50%;
-      background: #a6e3a1; margin-right: 6px;
+      margin-right: 6px;
     }
 
-    .status-bar .embed-status { font-weight: 500; }
-    .status-iframe { color: #7c3aed; }
-    .status-direct { color: #059669; }
+    .status-dot-green { background: #a6e3a1; }
+    .status-dot-purple { background: #7c3aed; }
   </style>
 </head>
 <body>
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <div class="brand"><div class="dot"></div> Acme Dashboard</div>
+    <div class="brand">
+      <h2><span class="dot"></span> EmbedWidget</h2>
+      <p>Component Showcase</p>
+    </div>
 
-    <div class="section-label">Main</div>
-    <nav>
-      <div class="nav-item active" data-tab="overview">
-        <span class="icon">&#9776;</span> Overview
-      </div>
-      <div class="nav-item" data-tab="analytics-iframe">
-        <span class="icon">&#9635;</span> Analytics
-        <span class="badge badge-iframe">iframe</span>
-      </div>
-      <div class="nav-item" data-tab="analytics-direct">
-        <span class="icon">&#9635;</span> Analytics
-        <span class="badge badge-direct">direct</span>
-      </div>
-      <div class="nav-item" data-tab="settings">
-        <span class="icon">&#9881;</span> Settings
-      </div>
-    </nav>
+    <div class="section-label">Overview</div>
+    <div class="nav-item active" data-page="overview">
+      <span class="icon">&#9776;</span> All Components
+    </div>
 
-    <div class="section-label">Links</div>
-    <div class="nav-item"><span class="icon">&#128196;</span> Docs</div>
-    <div class="nav-item"><span class="icon">&#128172;</span> Support</div>
+    <div class="section-label">Components</div>
+    <div class="nav-item" data-page="analytics">
+      <span class="icon">&#128200;</span> Analytics
+      <span class="method-badge badge-both">2 modes</span>
+    </div>
+    <div class="nav-item" data-page="user-profile">
+      <span class="icon">&#128100;</span> UserProfile
+      <span class="method-badge badge-both">2 modes</span>
+    </div>
+    <div class="nav-item" data-page="activity-feed">
+      <span class="icon">&#128276;</span> ActivityFeed
+      <span class="method-badge badge-both">2 modes</span>
+    </div>
+    <div class="nav-item" data-page="pricing-table">
+      <span class="icon">&#128176;</span> PricingTable
+      <span class="method-badge badge-both">2 modes</span>
+    </div>
+    <div class="nav-item" data-page="login-form">
+      <span class="icon">&#128274;</span> LoginForm
+      <span class="method-badge badge-both">2 modes</span>
+    </div>
+    <div class="nav-item" data-page="data-table">
+      <span class="icon">&#128202;</span> DataTable
+      <span class="method-badge badge-both">2 modes</span>
+    </div>
 
-    <div class="user-info">
-      <div class="user-avatar">AK</div>
-      <div class="user-details">
-        <div class="name">Akshit</div>
-        <div class="role">Admin</div>
-      </div>
+    <div class="version-info">
+      SDK v1.0.0 &middot; 6 Components<br>
+      <span style="color:#45475a;">github.com/akshiitGpt</span>
     </div>
   </div>
 
@@ -437,249 +596,544 @@
   <div class="main">
 
     <div class="topbar">
-      <h1 id="pageTitle">Overview</h1>
-      <div class="actions">
-        <input type="text" class="search-box" placeholder="Search..." />
+      <h1 id="pageTitle">All Components</h1>
+      <div class="topbar-right">
+        <a class="gh-link" href="https://github.com/akshiitGpt/fe-embed-widget" target="_blank">View SDK on GitHub</a>
       </div>
     </div>
 
-    <!-- Tab bar -->
-    <div class="tab-bar">
-      <div class="tab active" data-tab="overview">
-        <span class="tab-icon">&#9776;</span> Overview
-      </div>
-      <div class="tab" data-tab="analytics-iframe">
-        <span class="tab-icon">&#9635;</span> Analytics
-        <span class="embed-tag embed-tag-iframe">iframe</span>
-      </div>
-      <div class="tab" data-tab="analytics-direct">
-        <span class="tab-icon">&#9635;</span> Analytics
-        <span class="embed-tag embed-tag-direct">Direct Embed</span>
-      </div>
-      <div class="tab" data-tab="settings">
-        <span class="tab-icon">&#9881;</span> Settings
+    <!-- ═══════════════════════════════════════ -->
+    <!-- OVERVIEW PAGE -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="page active" id="page-overview">
+      <div class="overview-content">
+
+        <div class="hero-banner">
+          <h2>Embeddable UI Components</h2>
+          <p>Drop-in components that can be embedded into any app via a single script tag. Each component supports two modes: <strong>direct DOM mount</strong> (like Clerk) or <strong>iframe isolation</strong>.</p>
+          <div class="hero-badges">
+            <span class="hero-badge">6 Components</span>
+            <span class="hero-badge">2 Embed Modes</span>
+            <span class="hero-badge">Real API Calls</span>
+            <span class="hero-badge">Zero Dependencies</span>
+          </div>
+        </div>
+
+        <div class="method-row">
+          <div class="method-explainer">
+            <span class="method-tag method-tag-direct">Method 1</span>
+            <h3>Direct Embed (SDK)</h3>
+            <p>The SDK mounts components directly into your DOM. Full access to host context, callbacks, and styling.</p>
+            <ul class="feature-list">
+              <li>Renders in host DOM</li>
+              <li>JS callbacks (onLoad, onError)</li>
+              <li>Shared auth &amp; context</li>
+              <li>Smallest footprint</li>
+            </ul>
+          </div>
+          <div class="method-explainer">
+            <span class="method-tag method-tag-iframe">Method 2</span>
+            <h3>iframe Embed</h3>
+            <p>Each component has a standalone HTML page that can be loaded in an iframe. Full isolation.</p>
+            <ul class="feature-list">
+              <li>Complete CSS/JS isolation</li>
+              <li>postMessage communication</li>
+              <li>Independent deployment</li>
+              <li>Best for third-party use</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="gallery-title">Component Gallery</h3>
+        <p class="gallery-subtitle">Click any component to see it live in both embed modes with integration code.</p>
+
+        <div class="gallery-grid">
+          <!-- Analytics -->
+          <div class="gallery-card" data-page="analytics">
+            <div class="gallery-card-preview">
+              <div class="preview-inner" id="preview-analytics"></div>
+            </div>
+            <div class="gallery-card-info">
+              <h4>Analytics</h4>
+              <p>Stats, charts, and API call monitoring dashboard</p>
+              <div class="card-tags">
+                <span class="card-tag card-tag-api">Live API</span>
+                <span class="card-tag card-tag-interactive">Interactive</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- UserProfile -->
+          <div class="gallery-card" data-page="user-profile">
+            <div class="gallery-card-preview">
+              <div class="preview-inner" id="preview-user-profile"></div>
+            </div>
+            <div class="gallery-card-info">
+              <h4>UserProfile</h4>
+              <p>User card with avatar, bio, and social stats</p>
+              <div class="card-tags">
+                <span class="card-tag card-tag-api">Live API</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ActivityFeed -->
+          <div class="gallery-card" data-page="activity-feed">
+            <div class="gallery-card-preview">
+              <div class="preview-inner" id="preview-activity-feed"></div>
+            </div>
+            <div class="gallery-card-info">
+              <h4>ActivityFeed</h4>
+              <p>Real-time activity stream with timestamps</p>
+              <div class="card-tags">
+                <span class="card-tag card-tag-api">Live API</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PricingTable -->
+          <div class="gallery-card" data-page="pricing-table">
+            <div class="gallery-card-preview">
+              <div class="preview-inner" id="preview-pricing-table"></div>
+            </div>
+            <div class="gallery-card-info">
+              <h4>PricingTable</h4>
+              <p>Three-tier pricing comparison with features</p>
+              <div class="card-tags">
+                <span class="card-tag card-tag-static">Static</span>
+                <span class="card-tag card-tag-interactive">Animated</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LoginForm -->
+          <div class="gallery-card" data-page="login-form">
+            <div class="gallery-card-preview">
+              <div class="preview-inner" id="preview-login-form"></div>
+            </div>
+            <div class="gallery-card-info">
+              <h4>LoginForm</h4>
+              <p>Auth form with social login and callbacks</p>
+              <div class="card-tags">
+                <span class="card-tag card-tag-interactive">Interactive</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- DataTable -->
+          <div class="gallery-card" data-page="data-table">
+            <div class="gallery-card-preview">
+              <div class="preview-inner" id="preview-data-table"></div>
+            </div>
+            <div class="gallery-card-info">
+              <h4>DataTable</h4>
+              <p>Sortable, searchable data grid</p>
+              <div class="card-tags">
+                <span class="card-tag card-tag-api">Live API</span>
+                <span class="card-tag card-tag-interactive">Interactive</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick start code -->
+        <div class="code-section">
+          <h3>Quick Start</h3>
+          <p class="code-desc">Add one script tag, then mount any component</p>
+          <div class="code-tabs">
+            <button class="code-tab-btn active" data-ct="qs-script">Script Tag</button>
+            <button class="code-tab-btn" data-ct="qs-direct">Direct Embed</button>
+            <button class="code-tab-btn" data-ct="qs-iframe">iframe Embed</button>
+          </div>
+<div class="code-block active" data-ct="qs-script"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="cm">&lt;!-- Load the SDK --&gt;</span>
+<span class="tg">&lt;script</span> src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/sdk.js"</span><span class="tg">&gt;&lt;/script&gt;</span>
+
+<span class="cm">&lt;!-- Mount components anywhere --&gt;</span>
+<span class="tg">&lt;div</span> id=<span class="str">"my-widget"</span><span class="tg">&gt;&lt;/div&gt;</span>
+<span class="tg">&lt;script&gt;</span>
+  EmbedWidget.<span class="fn">Analytics</span>(<span class="str">'#my-widget'</span>);
+<span class="tg">&lt;/script&gt;</span></div>
+<div class="code-block" data-ct="qs-direct"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="cm">// Mount any component with options</span>
+<span class="kw">const</span> profile = EmbedWidget.<span class="fn">UserProfile</span>(<span class="str">'#container'</span>, {
+  userId: <span class="str">1</span>,
+  <span class="fn">onLoad</span>: (data) =&gt; console.log(<span class="str">'User loaded'</span>, data),
+});
+
+<span class="cm">// Control it programmatically</span>
+profile.<span class="fn">refresh</span>();    <span class="cm">// re-fetch data</span>
+profile.<span class="fn">unmount</span>();    <span class="cm">// remove from DOM</span>
+
+<span class="cm">// Available: Analytics, UserProfile, ActivityFeed,</span>
+<span class="cm">//   PricingTable, LoginForm, DataTable</span></div>
+<div class="code-block" data-ct="qs-iframe"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="cm">// iframe any standalone widget page</span>
+EmbedWidget.<span class="fn">iframe</span>(<span class="str">'#container'</span>, {
+  page: <span class="str">'widgets/user-profile.html'</span>,
+  <span class="fn">onLoad</span>: (data) =&gt; console.log(<span class="str">'Loaded'</span>),
+});
+
+<span class="cm">// Or use raw iframe:</span>
+<span class="tg">&lt;iframe</span>
+  src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/widgets/login-form.html"</span>
+  style=<span class="str">"width:100%;height:500px;border:none"</span>
+<span class="tg">&gt;&lt;/iframe&gt;</span></div>
+        </div>
+
       </div>
     </div>
 
-    <!-- Tab panels -->
-    <div class="tab-content">
-
-      <!-- Overview: Native -->
-      <div class="tab-panel active" id="panel-overview">
-        <div class="native-content">
-          <div class="welcome-banner">
-            <h2>Embed SDK &mdash; Two Ways</h2>
-            <p>This dashboard demonstrates both embedding methods, like Clerk.com components. The Analytics tab is available in <strong>iframe mode</strong> (isolated, hosted page) and <strong>direct embed mode</strong> (SDK mounts into your DOM). Both call real APIs and render the same dashboard &mdash; zero widget source code in this repo.</p>
-          </div>
-
-          <div class="method-cards">
-            <div class="method-card">
-              <span class="method-badge method-badge-iframe">Method 1</span>
-              <h3>iframe Embed</h3>
-              <p>Loads the full hosted page inside an iframe. Complete isolation between host and embedded frontend.</p>
-              <ul class="feature-list">
-                <li>Full CSS/JS isolation</li>
-                <li>Separate deployment lifecycle</li>
-                <li>Communication via postMessage</li>
-                <li>Best for: untrusted or third-party content</li>
-              </ul>
-            </div>
-            <div class="method-card">
-              <span class="method-badge method-badge-direct">Method 2</span>
-              <h3>Direct Embed (SDK)</h3>
-              <p>A JavaScript SDK mounts the component directly into your DOM. Like Clerk's &lt;SignIn /&gt; components.</p>
-              <ul class="feature-list">
-                <li>Renders in host DOM, no iframe</li>
-                <li>Direct JS callbacks (onLoad, onError)</li>
-                <li>Inherits host context &amp; auth</li>
-                <li>Best for: first-party embedded dashboards</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="code-card">
-            <h3>Integration Code</h3>
-            <p class="subtitle">Load the SDK once, then use either method</p>
-            <div class="code-tabs">
-              <div class="code-tab active" data-code="iframe">iframe</div>
-              <div class="code-tab" data-code="direct">Direct Embed</div>
-              <div class="code-tab" data-code="sdk">SDK Script</div>
-            </div>
-<div class="code-block active" data-code="iframe"><span class="cm">// Method 1: iframe embed</span>
-<span class="kw">const</span> widget = EmbedWidget.<span class="fn">iframe</span>(<span class="str">'#container'</span>, {
-  title: <span class="str">'Analytics Dashboard'</span>,
-  <span class="fn">onLoad</span>: (data) => console.log(<span class="str">'Loaded'</span>, data),
-  <span class="fn">onError</span>: (err)  => console.error(err),
-});
-
-widget.<span class="fn">refresh</span>();   <span class="cm">// trigger reload</span>
-widget.<span class="fn">unmount</span>();   <span class="cm">// remove widget</span></div>
-<div class="code-block" data-code="direct"><span class="cm">// Method 2: direct embed — mounts into your DOM</span>
-<span class="kw">const</span> widget = EmbedWidget.<span class="fn">mount</span>(<span class="str">'#container'</span>, {
-  title: <span class="str">'Analytics Overview'</span>,
-  <span class="fn">onLoad</span>: (data) => console.log(<span class="str">'Loaded'</span>, data),
-  <span class="fn">onError</span>: (err)  => console.error(err),
-  <span class="fn">onFilterChange</span>: (range) => console.log(<span class="str">'Filter:'</span>, range),
-});
-
-widget.<span class="fn">refresh</span>();   <span class="cm">// re-fetch and re-render</span>
-widget.<span class="fn">unmount</span>();   <span class="cm">// clean up</span></div>
-<div class="code-block" data-code="sdk"><span class="cm">&lt;!-- Add this to your HTML --&gt;</span>
-<span class="tag">&lt;script</span> src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/sdk.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
-
-<span class="cm">&lt;!-- Then use either method --&gt;</span>
-<span class="tag">&lt;div</span> id=<span class="str">"analytics"</span><span class="tag">&gt;&lt;/div&gt;</span>
-<span class="tag">&lt;script&gt;</span>
-  EmbedWidget.<span class="fn">mount</span>(<span class="str">'#analytics'</span>);   <span class="cm">// direct</span>
-  <span class="cm">// OR</span>
-  EmbedWidget.<span class="fn">iframe</span>(<span class="str">'#analytics'</span>);  <span class="cm">// iframe</span>
-<span class="tag">&lt;/script&gt;</span></div>
-          </div>
-
+    <!-- ═══════════════════════════════════════ -->
+    <!-- COMPONENT DETAIL PAGES (generated by JS) -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="page" id="page-detail">
+      <div class="detail-content">
+        <div class="detail-header">
+          <div class="back-btn" id="backBtn">&#8592; Back to all components</div>
         </div>
-      </div>
-
-      <!-- Analytics: IFRAME -->
-      <div class="tab-panel" id="panel-analytics-iframe">
-        <iframe
-          id="analyticsFrame"
-          src="https://akshiitgpt.github.io/fe-embed-widget/"
-          title="Analytics (iframe)"
-        ></iframe>
-      </div>
-
-      <!-- Analytics: DIRECT EMBED -->
-      <div class="tab-panel" id="panel-analytics-direct">
-        <div class="embed-container" id="directEmbedTarget"></div>
-      </div>
-
-      <!-- Settings: Native -->
-      <div class="tab-panel" id="panel-settings">
-        <div class="settings-content">
-          <h2>Settings</h2>
-          <div class="setting-row">
-            <div class="setting-info"><h4>Dark mode</h4><p>Switch to dark theme</p></div>
-            <div class="toggle" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info"><h4>Email notifications</h4><p>Receive alerts via email</p></div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info"><h4>Default embed method</h4><p>Choose iframe or direct for analytics tab</p></div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
+        <div class="detail-title-row">
+          <h2 id="detailTitle"></h2>
         </div>
-      </div>
+        <p class="detail-desc" id="detailDesc"></p>
 
+        <div class="mode-toggle" id="modeToggle">
+          <button class="mode-btn active" data-mode="direct">Direct Embed</button>
+          <button class="mode-btn" data-mode="iframe">iframe</button>
+        </div>
+
+        <div class="preview-frame" id="previewFrame"></div>
+
+        <div class="code-section">
+          <h3>Integration Code</h3>
+          <p class="code-desc" id="codeDesc"></p>
+          <div class="code-tabs" id="detailCodeTabs"></div>
+          <div id="detailCodeBlocks"></div>
+        </div>
+
+        <h3 style="margin-bottom:12px;">Options</h3>
+        <table class="props-table" id="propsTable">
+          <thead><tr><th>Prop</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody id="propsBody"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Status bar -->
     <div class="status-bar">
-      <div><span class="status-dot"></span> All systems operational</div>
-      <div id="embedStatus" class="embed-status">Ready</div>
+      <div><span class="status-dot status-dot-green"></span> SDK loaded</div>
+      <div id="statusText" style="color:#7c3aed;font-weight:500;">EmbedWidget v1.0.0 &middot; 6 components</div>
     </div>
 
   </div>
 
-  <!-- Load the SDK from the widget repo -->
+  <!-- Load the SDK -->
   <script src="https://akshiitgpt.github.io/fe-embed-widget/sdk.js"></script>
 
   <script>
-    // ── Tab switching ──
-    var allTabs = document.querySelectorAll('.tab[data-tab], .nav-item[data-tab]');
-    var panels = document.querySelectorAll('.tab-panel');
-    var pageTitle = document.getElementById('pageTitle');
-    var embedStatus = document.getElementById('embedStatus');
-    var directMounted = false;
-    var directHandle = null;
-
-    var titles = {
-      'overview': 'Overview',
-      'analytics-iframe': 'Analytics (iframe)',
-      'analytics-direct': 'Analytics (Direct Embed)',
-      'settings': 'Settings'
+    // ── Component registry ──
+    var COMPONENTS = {
+      'analytics': {
+        name: 'Analytics',
+        sdkMethod: 'Analytics',
+        desc: 'Full analytics dashboard with live stats, charts, and API monitoring table.',
+        iframePage: 'index.html',
+        tags: ['Live API', 'Interactive'],
+        props: [
+          ['title', 'string', 'Dashboard title (default: "Analytics Overview")'],
+          ['onLoad', 'function', 'Called when data finishes loading with stats array'],
+          ['onError', 'function', 'Called on fetch error'],
+          ['onFilterChange', 'function', 'Called when time range filter changes']
+        ],
+        directCode: '<span class="kw">const</span> widget = EmbedWidget.<span class="fn">Analytics</span>(<span class="str">\'#container\'</span>, {\n  title: <span class="str">\'My Analytics\'</span>,\n  <span class="fn">onLoad</span>: (data) =&gt; console.log(data.stats),\n  <span class="fn">onFilterChange</span>: (range) =&gt; console.log(range),\n});',
+        iframeCode: '<span class="tg">&lt;iframe</span>\n  src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/"</span>\n  style=<span class="str">"width:100%;height:500px;border:none"</span>\n<span class="tg">&gt;&lt;/iframe&gt;</span>'
+      },
+      'user-profile': {
+        name: 'UserProfile',
+        sdkMethod: 'UserProfile',
+        desc: 'User profile card with avatar, bio, stats, and action buttons. Fetches live user data.',
+        iframePage: 'widgets/user-profile.html',
+        tags: ['Live API'],
+        props: [
+          ['userId', 'number', 'User ID to fetch (default: 1)'],
+          ['onLoad', 'function', 'Called with user data after load'],
+          ['onError', 'function', 'Called on fetch error']
+        ],
+        directCode: '<span class="kw">const</span> widget = EmbedWidget.<span class="fn">UserProfile</span>(<span class="str">\'#container\'</span>, {\n  userId: <span class="str">1</span>,\n  <span class="fn">onLoad</span>: (data) =&gt; console.log(data),\n});',
+        iframeCode: '<span class="tg">&lt;iframe</span>\n  src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/widgets/user-profile.html"</span>\n  style=<span class="str">"width:100%;height:450px;border:none"</span>\n<span class="tg">&gt;&lt;/iframe&gt;</span>'
+      },
+      'activity-feed': {
+        name: 'ActivityFeed',
+        sdkMethod: 'ActivityFeed',
+        desc: 'Scrollable activity stream with user actions, timestamps, and colored avatars.',
+        iframePage: 'widgets/activity-feed.html',
+        tags: ['Live API'],
+        props: [
+          ['limit', 'number', 'Number of activities to show (default: 8)'],
+          ['onLoad', 'function', 'Called when feed data loads'],
+          ['onError', 'function', 'Called on fetch error']
+        ],
+        directCode: '<span class="kw">const</span> widget = EmbedWidget.<span class="fn">ActivityFeed</span>(<span class="str">\'#container\'</span>, {\n  limit: <span class="str">8</span>,\n  <span class="fn">onLoad</span>: (data) =&gt; console.log(data),\n});',
+        iframeCode: '<span class="tg">&lt;iframe</span>\n  src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/widgets/activity-feed.html"</span>\n  style=<span class="str">"width:100%;height:500px;border:none"</span>\n<span class="tg">&gt;&lt;/iframe&gt;</span>'
+      },
+      'pricing-table': {
+        name: 'PricingTable',
+        sdkMethod: 'PricingTable',
+        desc: 'Three-tier pricing comparison with animated mount, feature lists, and CTA buttons.',
+        iframePage: 'widgets/pricing-table.html',
+        tags: ['Static', 'Animated'],
+        props: [
+          ['onSelect', 'function', 'Called with plan name when CTA is clicked'],
+          ['onLoad', 'function', 'Called after render completes']
+        ],
+        directCode: '<span class="kw">const</span> widget = EmbedWidget.<span class="fn">PricingTable</span>(<span class="str">\'#container\'</span>, {\n  <span class="fn">onSelect</span>: (plan) =&gt; console.log(<span class="str">\'Selected:\'</span>, plan),\n  <span class="fn">onLoad</span>: () =&gt; console.log(<span class="str">\'Rendered\'</span>),\n});',
+        iframeCode: '<span class="tg">&lt;iframe</span>\n  src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/widgets/pricing-table.html"</span>\n  style=<span class="str">"width:100%;height:550px;border:none"</span>\n<span class="tg">&gt;&lt;/iframe&gt;</span>'
+      },
+      'login-form': {
+        name: 'LoginForm',
+        sdkMethod: 'LoginForm',
+        desc: 'Authentication form with email/password, social login buttons, and submit handling.',
+        iframePage: 'widgets/login-form.html',
+        tags: ['Interactive'],
+        props: [
+          ['onSubmit', 'function', 'Called with { email, password } on form submit'],
+          ['onForgotPassword', 'function', 'Called when "Forgot password" is clicked'],
+          ['onSignUp', 'function', 'Called when "Sign up" link is clicked'],
+          ['onLoad', 'function', 'Called after form renders']
+        ],
+        directCode: '<span class="kw">const</span> widget = EmbedWidget.<span class="fn">LoginForm</span>(<span class="str">\'#container\'</span>, {\n  <span class="fn">onSubmit</span>: ({ email, password }) =&gt; {\n    console.log(<span class="str">\'Login:\'</span>, email);\n  },\n  <span class="fn">onForgotPassword</span>: () =&gt; alert(<span class="str">\'Reset flow\'</span>),\n  <span class="fn">onSignUp</span>: () =&gt; window.location = <span class="str">\'/signup\'</span>,\n});',
+        iframeCode: '<span class="tg">&lt;iframe</span>\n  src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/widgets/login-form.html"</span>\n  style=<span class="str">"width:100%;height:550px;border:none"</span>\n<span class="tg">&gt;&lt;/iframe&gt;</span>'
+      },
+      'data-table': {
+        name: 'DataTable',
+        sdkMethod: 'DataTable',
+        desc: 'Sortable and searchable data table that fetches live user data with column sorting.',
+        iframePage: 'widgets/data-table.html',
+        tags: ['Live API', 'Interactive'],
+        props: [
+          ['onLoad', 'function', 'Called with user data array after load'],
+          ['onError', 'function', 'Called on fetch error']
+        ],
+        directCode: '<span class="kw">const</span> widget = EmbedWidget.<span class="fn">DataTable</span>(<span class="str">\'#container\'</span>, {\n  <span class="fn">onLoad</span>: (data) =&gt; console.log(data.users.length, <span class="str">\'users loaded\'</span>),\n});',
+        iframeCode: '<span class="tg">&lt;iframe</span>\n  src=<span class="str">"https://akshiitgpt.github.io/fe-embed-widget/widgets/data-table.html"</span>\n  style=<span class="str">"width:100%;height:500px;border:none"</span>\n<span class="tg">&gt;&lt;/iframe&gt;</span>'
+      }
     };
 
-    allTabs.forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        var target = this.getAttribute('data-tab');
-        if (!target) return;
+    var WIDGET_BASE = 'https://akshiitgpt.github.io/fe-embed-widget';
 
-        // Update active state
-        document.querySelectorAll('.tab[data-tab]').forEach(function(t) { t.classList.remove('active'); });
-        document.querySelectorAll('.nav-item[data-tab]').forEach(function(t) { t.classList.remove('active'); });
-        document.querySelectorAll('[data-tab="' + target + '"]').forEach(function(t) { t.classList.add('active'); });
+    // ── State ──
+    var currentPage = 'overview';
+    var currentComponent = null;
+    var currentMode = 'direct';
+    var mountedWidgets = {};
+    var previewsLoaded = false;
 
-        // Show panel
-        panels.forEach(function(p) { p.classList.remove('active'); });
-        document.getElementById('panel-' + target).classList.add('active');
+    // ── Navigation ──
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
 
-        pageTitle.textContent = titles[target] || target;
+      if (pageId === 'overview') {
+        document.getElementById('page-overview').classList.add('active');
+        document.querySelector('.nav-item[data-page="overview"]').classList.add('active');
+        document.getElementById('pageTitle').textContent = 'All Components';
+        currentPage = 'overview';
+        loadPreviews();
+      } else {
+        document.getElementById('page-detail').classList.add('active');
+        var navItem = document.querySelector('.nav-item[data-page="' + pageId + '"]');
+        if (navItem) navItem.classList.add('active');
+        currentPage = pageId;
+        currentComponent = COMPONENTS[pageId];
+        currentMode = 'direct';
+        document.getElementById('pageTitle').textContent = currentComponent.name;
+        renderDetail();
+      }
+    }
 
-        // Lazy-mount the direct embed on first visit
-        if (target === 'analytics-direct' && !directMounted) {
-          directMounted = true;
-          if (typeof EmbedWidget !== 'undefined') {
-            directHandle = EmbedWidget.mount('#directEmbedTarget', {
-              title: 'Analytics Overview',
-              onLoad: function(data) {
-                embedStatus.textContent = 'Direct embed: connected | ' + data.stats.length + ' metrics';
-                embedStatus.className = 'embed-status status-direct';
-              },
-              onError: function(err) {
-                embedStatus.textContent = 'Direct embed: error';
-                embedStatus.className = 'embed-status';
-                embedStatus.style.color = '#dc2626';
-              },
-              onFilterChange: function(range) {
-                console.log('[Host] Direct embed filter changed:', range);
-              }
-            });
-          } else {
-            document.getElementById('directEmbedTarget').innerHTML =
-              '<div style="padding:60px;text-align:center;color:#888;">SDK not loaded yet. Waiting for GitHub Pages...</div>';
-          }
+    // ── Gallery preview thumbnails ──
+    function loadPreviews() {
+      if (previewsLoaded || typeof EmbedWidget === 'undefined') return;
+      previewsLoaded = true;
+
+      var sdkReady = typeof EmbedWidget !== 'undefined';
+      if (!sdkReady) return;
+
+      // Mount mini previews in gallery cards
+      var previews = {
+        'preview-analytics': 'Analytics',
+        'preview-user-profile': 'UserProfile',
+        'preview-activity-feed': 'ActivityFeed',
+        'preview-pricing-table': 'PricingTable',
+        'preview-login-form': 'LoginForm',
+        'preview-data-table': 'DataTable'
+      };
+
+      Object.keys(previews).forEach(function(elId) {
+        var el = document.getElementById(elId);
+        if (el && EmbedWidget[previews[elId]]) {
+          EmbedWidget[previews[elId]](el, {});
         }
+      });
+    }
 
-        // Update status bar
-        if (target === 'analytics-iframe') {
-          embedStatus.textContent = 'iframe embed: connected';
-          embedStatus.className = 'embed-status status-iframe';
-        } else if (target === 'analytics-direct') {
-          if (directHandle) {
-            embedStatus.textContent = 'Direct embed: active';
-            embedStatus.className = 'embed-status status-direct';
-          }
+    // ── Detail page ──
+    function renderDetail() {
+      var comp = currentComponent;
+      document.getElementById('detailTitle').textContent = comp.name;
+      document.getElementById('detailDesc').textContent = comp.desc;
+      document.getElementById('codeDesc').textContent = 'Use ' + comp.name + ' in your app';
+
+      // Reset mode toggle
+      document.querySelectorAll('#modeToggle .mode-btn').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-mode') === 'direct');
+      });
+
+      renderPreview('direct');
+      renderCodeBlocks();
+      renderProps();
+    }
+
+    function renderPreview(mode) {
+      var comp = currentComponent;
+      var frame = document.getElementById('previewFrame');
+
+      // Unmount previous
+      if (mountedWidgets.current) {
+        mountedWidgets.current.unmount();
+        mountedWidgets.current = null;
+      }
+
+      frame.innerHTML = '';
+
+      if (mode === 'direct') {
+        var target = document.createElement('div');
+        frame.appendChild(target);
+        if (typeof EmbedWidget !== 'undefined' && EmbedWidget[comp.sdkMethod]) {
+          mountedWidgets.current = EmbedWidget[comp.sdkMethod](target, {
+            onLoad: function() {
+              document.getElementById('statusText').textContent = comp.name + ' (direct) — loaded';
+            }
+          });
         } else {
-          embedStatus.textContent = 'Ready';
-          embedStatus.className = 'embed-status';
+          frame.innerHTML = '<div style="padding:60px;text-align:center;color:#888;">SDK not loaded yet — wait for GitHub Pages to deploy</div>';
         }
+      } else {
+        var iframeSrc = WIDGET_BASE + '/' + comp.iframePage;
+        var iframe = document.createElement('iframe');
+        iframe.src = iframeSrc;
+        iframe.style.cssText = 'width:100%;min-height:450px;border:none;border-radius:8px;';
+        iframe.title = comp.name + ' (iframe)';
+        frame.appendChild(iframe);
+        document.getElementById('statusText').textContent = comp.name + ' (iframe) — ' + iframeSrc;
+      }
+    }
+
+    function renderCodeBlocks() {
+      var comp = currentComponent;
+      var tabsEl = document.getElementById('detailCodeTabs');
+      var blocksEl = document.getElementById('detailCodeBlocks');
+
+      tabsEl.innerHTML = '';
+      blocksEl.innerHTML = '';
+
+      var tabs = [
+        { id: 'direct', label: 'Direct Embed', code: comp.directCode },
+        { id: 'iframe', label: 'iframe', code: comp.iframeCode }
+      ];
+
+      tabs.forEach(function(t, i) {
+        var btn = document.createElement('button');
+        btn.className = 'code-tab-btn' + (i === 0 ? ' active' : '');
+        btn.setAttribute('data-ct', 'detail-' + t.id);
+        btn.textContent = t.label;
+        tabsEl.appendChild(btn);
+
+        var block = document.createElement('div');
+        block.className = 'code-block' + (i === 0 ? ' active' : '');
+        block.setAttribute('data-ct', 'detail-' + t.id);
+        block.innerHTML = '<button class="copy-btn" onclick="copyCode(this)">Copy</button>' + t.code;
+        blocksEl.appendChild(block);
+
+        btn.addEventListener('click', function() {
+          tabsEl.querySelectorAll('.code-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+          blocksEl.querySelectorAll('.code-block').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          block.classList.add('active');
+        });
+      });
+    }
+
+    function renderProps() {
+      var comp = currentComponent;
+      var tbody = document.getElementById('propsBody');
+      tbody.innerHTML = '';
+
+      comp.props.forEach(function(p) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td><code>' + p[0] + '</code></td><td><code>' + p[1] + '</code></td><td>' + p[2] + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ── Event listeners ──
+
+    // Sidebar + gallery card navigation
+    document.querySelectorAll('.nav-item[data-page]').forEach(function(item) {
+      item.addEventListener('click', function() {
+        showPage(this.getAttribute('data-page'));
       });
     });
 
-    // ── Code tab switching ──
-    document.querySelectorAll('.code-tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        var target = this.getAttribute('data-code');
-        document.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
-        document.querySelectorAll('.code-block').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.gallery-card[data-page]').forEach(function(card) {
+      card.addEventListener('click', function() {
+        showPage(this.getAttribute('data-page'));
+      });
+    });
+
+    // Back button
+    document.getElementById('backBtn').addEventListener('click', function() {
+      showPage('overview');
+    });
+
+    // Mode toggle
+    document.querySelectorAll('#modeToggle .mode-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var mode = this.getAttribute('data-mode');
+        currentMode = mode;
+        document.querySelectorAll('#modeToggle .mode-btn').forEach(function(b) { b.classList.remove('active'); });
         this.classList.add('active');
-        document.querySelector('.code-block[data-code="' + target + '"]').classList.add('active');
+        renderPreview(mode);
       });
     });
 
-    // ── Listen for iframe postMessage ──
-    window.addEventListener('message', function(e) {
-      if (e.data && e.data.type === 'embed-loaded') {
-        embedStatus.textContent = 'iframe embed: connected | ' + e.data.stats.length + ' metrics loaded';
-        embedStatus.className = 'embed-status status-iframe';
-      }
-      if (e.data && e.data.type === 'embed-error') {
-        embedStatus.textContent = 'iframe embed: error - ' + e.data.error;
-        embedStatus.style.color = '#dc2626';
-      }
+    // Overview code tabs
+    document.querySelectorAll('.code-tab-btn[data-ct]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var target = this.getAttribute('data-ct');
+        var parent = this.closest('.code-section');
+        parent.querySelectorAll('.code-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        parent.querySelectorAll('.code-block').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        parent.querySelector('.code-block[data-ct="' + target + '"]').classList.add('active');
+      });
     });
+
+    // Copy button
+    function copyCode(btn) {
+      var block = btn.parentElement;
+      var text = block.textContent.replace('Copy', '').replace('Copied!', '').trim();
+      navigator.clipboard.writeText(text);
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+    }
+
+    // Load previews when SDK is ready
+    function waitForSDK() {
+      if (typeof EmbedWidget !== 'undefined') {
+        loadPreviews();
+      } else {
+        setTimeout(waitForSDK, 500);
+      }
+    }
+    waitForSDK();
   </script>
 </body>
 </html>
