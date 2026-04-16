@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Host App - Embedding Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+    }
+
+    nav {
+      background: white;
+      padding: 16px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .logo {
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav .nav-links { display: flex; gap: 24px; }
+    nav .nav-links a {
+      text-decoration: none;
+      color: #555;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    nav .nav-links a:hover { color: #667eea; }
+
+    .hero {
+      max-width: 900px;
+      margin: 60px auto 40px;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .demo-section {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+
+    .demo-section h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .demo-section p.subtitle {
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .demo-card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      margin-bottom: 24px;
+    }
+
+    .demo-card h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .demo-card h3 .num {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .iframe-demo {
+      border: 2px dashed #ddd;
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+      background: #fafafa;
+      margin-top: 16px;
+    }
+
+    .iframe-demo iframe {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px;
+      border-radius: 10px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin-top: 16px;
+      position: relative;
+    }
+
+    .code-block .keyword { color: #cba6f7; }
+    .code-block .string { color: #a6e3a1; }
+    .code-block .tag { color: #89b4fa; }
+    .code-block .attr { color: #f9e2af; }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #cdd6f4;
+      padding: 4px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.2); }
+
+    .event-log {
+      margin-top: 16px;
+      background: #1e1e2e;
+      color: #a6e3a1;
+      padding: 16px;
+      border-radius: 10px;
+      font-family: 'SF Mono', monospace;
+      font-size: 12px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .event-log .log-entry { margin-bottom: 4px; }
+    .event-log .timestamp { color: #6c7086; }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">HostApp</div>
+    <div class="nav-links">
+      <a href="#iframe-embed">iFrame Embed</a>
+      <a href="#script-embed">Script Embed</a>
+      <a href="#events">Events</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="badge">POC - Embeddable Frontend</div>
+    <h1>Embedding a Remote Widget into a Host App</h1>
+    <p>This host app demonstrates two ways to embed a frontend widget served from GitHub Pages — without including any of the widget's source code.</p>
+  </div>
+
+  <!-- Method 1: iframe -->
+  <div class="demo-section" id="iframe-embed">
+    <div class="demo-card">
+      <h3><span class="num">1</span> iFrame Embed</h3>
+      <p>The widget is loaded directly inside an iframe. The host app has zero knowledge of the widget's internals.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <span class="tag">&lt;iframe</span><br>
+        &nbsp;&nbsp;<span class="attr">src</span>=<span class="string">"https://akshiitgpt.github.io/fe-embed-widget/"</span><br>
+        &nbsp;&nbsp;<span class="attr">width</span>=<span class="string">"380"</span><br>
+        &nbsp;&nbsp;<span class="attr">height</span>=<span class="string">"420"</span><br>
+        &nbsp;&nbsp;<span class="attr">style</span>=<span class="string">"border:none;border-radius:12px"</span><br>
+        <span class="tag">&gt;&lt;/iframe&gt;</span>
+      </div>
+      <div class="iframe-demo">
+        <iframe
+          id="widgetIframe"
+          src="https://akshiitgpt.github.io/fe-embed-widget/"
+          width="380"
+          height="420"
+          style="border:none;border-radius:12px"
+          title="Embedded Widget"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 2: Script tag -->
+  <div class="demo-section" id="script-embed">
+    <div class="demo-card">
+      <h3><span class="num">2</span> Script Tag Embed</h3>
+      <p>A single script tag injects a floating chat button. Click the chat bubble in the bottom-right corner to try it.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <span class="tag">&lt;script</span><br>
+        &nbsp;&nbsp;<span class="attr">src</span>=<span class="string">"https://akshiitgpt.github.io/fe-embed-widget/embed.js"</span><br>
+        &nbsp;&nbsp;<span class="attr">data-position</span>=<span class="string">"bottom-right"</span><br>
+        <span class="tag">&gt;&lt;/script&gt;</span>
+      </div>
+      <p style="margin-top:12px;color:#888;font-size:13px;">
+        ^ The floating chat icon in the bottom-right corner is injected by this script.
+      </p>
+    </div>
+  </div>
+
+  <!-- Events -->
+  <div class="demo-section" id="events">
+    <div class="demo-card">
+      <h3><span class="num">3</span> Cross-Origin Communication</h3>
+      <p>The host app listens for postMessage events from the embedded widget. Try sending a message in the iframe above.</p>
+      <div class="event-log" id="eventLog">
+        <div class="log-entry"><span class="timestamp">[waiting]</span> Send a message in the widget to see events here...</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    POC: Embeddable Frontend via GitHub Pages &mdash; Host app does NOT contain the widget code.
+  </footer>
+
+  <!-- Embed via script tag (Method 2) -->
+  <script src="https://akshiitgpt.github.io/fe-embed-widget/embed.js" data-position="bottom-right"></script>
+
+  <script>
+    // Listen for postMessage from the embedded widget
+    var eventLog = document.getElementById('eventLog');
+    var firstEvent = true;
+
+    window.addEventListener('message', function(e) {
+      if (e.data && (e.data.type === 'widget-message' || e.data.type === 'widget-reply')) {
+        if (firstEvent) {
+          eventLog.innerHTML = '';
+          firstEvent = false;
+        }
+        var time = new Date().toLocaleTimeString();
+        var direction = e.data.type === 'widget-message' ? 'USER' : 'BOT';
+        var entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.innerHTML = '<span class="timestamp">[' + time + ']</span> ' + direction + ': ' + e.data.text;
+        eventLog.appendChild(entry);
+        eventLog.scrollTop = eventLog.scrollHeight;
+      }
+    });
+
+    function copyCode(btn) {
+      var code = btn.parentElement.textContent.replace('Copy', '').trim();
+      navigator.clipboard.writeText(code);
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+    }
+  </script>
+</body>
+</html>
